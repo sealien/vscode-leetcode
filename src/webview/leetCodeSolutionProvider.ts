@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { ViewColumn } from "vscode";
-import { IProblem } from "../shared";
 import { leetCodePreviewProvider } from "./leetCodePreviewProvider";
 import { ILeetCodeWebviewOption, LeetCodeWebview } from "./LeetCodeWebview";
 import { markdownEngine } from "./markdownEngine";
@@ -10,24 +9,25 @@ import { markdownEngine } from "./markdownEngine";
 class LeetCodeSolutionProvider extends LeetCodeWebview {
 
     protected readonly viewType: string = "leetcode.solution";
+    private problemName: string;
     private solution: Solution;
 
-    public show(solutionString: string, problem: IProblem): void {
-        this.solution = this.parseSolution(solutionString, problem);
+    public show(solutionString: string): void {
+        this.solution = this.parseSolution(solutionString);
         this.showWebviewInternal();
     }
 
     protected getWebviewOption(): ILeetCodeWebviewOption {
-        if (!leetCodePreviewProvider.isSideMode()) {
-            return {
-                title: `${this.solution.problem}: Solution`,
-                viewColumn: ViewColumn.One,
-            };
-        } else {
+        if (leetCodePreviewProvider.isSideMode()) {
             return {
                 title: "Solution",
                 viewColumn: ViewColumn.Two,
                 preserveFocus: true,
+            };
+        } else {
+            return {
+                title: `Solution: ${this.problemName}`,
+                viewColumn: ViewColumn.One,
             };
         }
     }
@@ -50,6 +50,7 @@ class LeetCodeSolutionProvider extends LeetCodeWebview {
             <!DOCTYPE html>
             <html>
             <head>
+                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https:; script-src vscode-resource:; style-src vscode-resource:;"/>
                 ${styles}
             </head>
             <body class="vscode-body 'scrollBeyondLastLine' 'wordWrap' 'showEditorSelection'" style="tab-size:4">
@@ -66,17 +67,17 @@ class LeetCodeSolutionProvider extends LeetCodeWebview {
         delete this.solution;
     }
 
-    private parseSolution(raw: string, problem: IProblem): Solution {
+    private parseSolution(raw: string): Solution {
+        raw = raw.slice(1); // skip first empty line
+        [this.problemName, raw] = raw.split(/\n\n([^]+)/); // parse problem name and skip one line
         const solution: Solution = new Solution();
         // [^] matches everything including \n, yet can be replaced by . in ES2018's `m` flag
-        raw = raw.slice(1); // skip first empty line
-        [solution.title, raw] = raw.split(/\n\n([^]+)/); // parse title and skip one line
-        [solution.url, raw] = raw.split(/\n\n([^]+)/); // parse url and skip one line
+        [solution.title, raw] = raw.split(/\n\n([^]+)/);
+        [solution.url, raw] = raw.split(/\n\n([^]+)/);
         [solution.lang, raw] = raw.match(/\* Lang:\s+(.+)\n([^]+)/)!.slice(1);
         [solution.author, raw] = raw.match(/\* Author:\s+(.+)\n([^]+)/)!.slice(1);
         [solution.votes, raw] = raw.match(/\* Votes:\s+(\d+)\n\n([^]+)/)!.slice(1);
         solution.body = raw;
-        solution.problem = problem.name;
         return solution;
     }
 }
@@ -89,7 +90,6 @@ class Solution {
     public author: string = "";
     public votes: string = "";
     public body: string = ""; // Markdown supported
-    public problem: string = "";
 }
 
 export const leetCodeSolutionProvider: LeetCodeSolutionProvider = new LeetCodeSolutionProvider();

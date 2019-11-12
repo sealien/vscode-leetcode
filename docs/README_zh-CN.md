@@ -20,11 +20,7 @@
   </a>
 </p>
 
-## 赞助
-[![coding](https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/sponsor_coding.png)](https://coding.net/?utm_source=leetcode)
-
-- [English Document](#Requirements)
-- [中文文档](https://github.com/jdneo/vscode-leetcode/blob/master/docs/README_zh-CN.md)
+- [English Document](https://github.com/jdneo/vscode-leetcode#requirements) | 中文文档
 
 ## 运行条件
 - [VS Code 1.23.0+](https://code.visualstudio.com/)
@@ -73,7 +69,7 @@
 - 直接点击题目或者在 `LeetCode Explorer` 中**右键**题目并选择 `Preview Problem` 可查看题目描述
 - 选择 `Show Problem` 可直接进行答题。
 
-  > 注意：若当前 VS Code 没有已打开的文件夹，则生成的题目文件会存储于 **$HOME/.leetcode/** 目录下。
+  > 注意：你可以通过更新配置项 `leetcode.workspaceFolder` 来指定保存题目文件所用的工作区路径。默认工作区路径为：**$HOME/.leetcode/**。
 
   > 注意：你可以通过更新配置项 `leetcode.showCommentDescription` 来指定是否要在注释中包含题目描述。
 
@@ -81,37 +77,18 @@
 
 ---
 
-### 查看高票解答
+### 编辑器快捷方式
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/solution.png" alt="高票解答" />
+  <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/shortcuts.png" alt="Editor Shortcuts" />
 </p>
 
-- 选择 `Show Top Voted Solution` 可查看该题目在讨论区内的高票解答。
+- 插件会在编辑区域内支持四种不同的快捷方式（Code Lens）:
+  - `Submit`: 提交你的答案至 LeetCode；
+  - `Test`: 用给定的测试用例测试你的答案；
+  - `Solution`: 显示该问题的高票解答；
+  - `Description`: 显示该问题的题目描述。
 
----
-
-### 提交答案
-<p align="center">
-  <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/submit.png" alt="提交答案" />
-</p>
-
-- 通过点击文件最下方的 `Submit` 可提交答案。 你也可以在编辑区内右键并选择 `Submit to LeetCode`，将**当前**文件提交。
-
-> 如果你不希望在编辑器中显示**测试**和**提交**的快捷方式，可以将配置项 `leetcode.enableShortcuts` 设置为 `false`。
-
----
-
-### 测试答案
-<p align="center">
-  <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/test.png" alt="测试答案" />
-</p>
-
-- 通过点击文件最下方的 `Test` 可测试答案。你也可以在编辑区内右键并选择 `Test in LeetCode`，对**当前**文件进行测试。
-
-- 有下列三种测试集来源：
-  - **默认测试集**：Test with the default cases
-  - **在输入框内输入测试集**：Write test cases in input box
-  - **提供自定义测试集文件**：Test with the written cases in file
+  > 注意：你可以通过 `leetcode.editor.shortcuts` 配置项来定制需要激活的快捷方式。默认情况下只有 `Submit` 和 `Test` 会被激活。
 
 ---
 
@@ -129,22 +106,26 @@
   <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/session.png" alt="管理存档" />
 </p>
 
-- 点击位于 VS Code 底部状态栏的 `LeetCode: ***` 管理 `LeetCode 存档`。你可以**切换**存档或者**创建**新的存档。
+- 点击位于 VS Code 底部状态栏的 `LeetCode: ***` 管理 `LeetCode 存档`。你可以**切换**存档或者**创建**，**删除**存档。
 
 
 ## 插件配置项
-| 配置项名称                 | 描述                                                                                                                                                                                                                                | 默认值     |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| `leetcode.hideSolved`      | 指定是否要隐藏已解决的问题                                                                                                                                                                                                          | `false`    |
-| `leetcode.showLocked`      | 指定是否显示付费题目，只有付费账户才可以打开付费题目                                                                                                                                                                                | `false`    |
-| `leetcode.defaultLanguage` | 指定答题时使用的默认语言，可选语言有：`bash`, `c`, `cpp`, `csharp`, `golang`, `java`, `javascript`, `kotlin`, `mysql`, `php`, `python`,`python3`,`ruby`, `rust`, `scala`,`swift`                                                    | `N/A`      |
-| `leetcode.useWsl`          | 指定是否启用 WSL                                                                                                                                                                                                                    | `false`    |
-| `leetcode.endpoint`        | 指定使用的终端，可用终端有：`leetcode`, `leetcode-cn`                                                                                                                                                                               | `leetcode` |
-| `leetcode.outputFolder`    | 指定保存文件时所用的相对文件夹路径。除了用户自定义路径外，也可以使用保留项，包括：<ul><li>`${tag}`: 根据题目的类别进行分类。<li>`${language}`: 根据题目的语言进行分类。</li><li>`${difficulty}`: 根据题目的难度进行分类。</li></ul> | N/A        |
-| `leetcode.enableStatusBar` | 指定是否在 VS Code 下方显示插件状态栏。                                                                                                                                                                                             | `true`     |
-| `leetcode.enableShortcuts` | 指定是否在 VS Code 编辑文件下方显示提交和测试的快捷按钮。                                                                                                                                                                           | `true`     |
-| `leetcode.enableSideMode`  | 指定在解决一道题时，是否将`问题预览`、`高票答案`与`提交结果`窗口集中在编辑器的第二栏。                                                                                                                                              | `true`     |
-| `leetcode.nodePath`        | 指定 `Node.js` 可执行文件的路径。                                                                                                                                                                                                   | `node`     |
+| 配置项名称                                                                         | 描述                                                                                                                                                                                                                                                                                            | 默认值             |
+| ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `leetcode.hideSolved`                                                              | 指定是否要隐藏已解决的问题                                                                                                                                                                                                                                                                      | `false`            |
+| `leetcode.showLocked`                                                              | 指定是否显示付费题目，只有付费账户才可以打开付费题目                                                                                                                                                                                                                                            | `false`            |
+| `leetcode.defaultLanguage`                                                         | 指定答题时使用的默认语言，可选语言有：`bash`, `c`, `cpp`, `csharp`, `golang`, `java`, `javascript`, `kotlin`, `mysql`, `php`, `python`,`python3`,`ruby`, `rust`, `scala`,`swift`                                                                                                                | `N/A`              |
+| `leetcode.useWsl`                                                                  | 指定是否启用 WSL                                                                                                                                                                                                                                                                                | `false`            |
+| `leetcode.endpoint`                                                                | 指定使用的终端，可用终端有：`leetcode`, `leetcode-cn`                                                                                                                                                                                                                                           | `leetcode`         |
+| `leetcode.workspaceFolder`                                                         | 指定保存文件的工作区目录                                                                                                                                                                                                                                                                        | `""`               |
+| `leetcode.filePath`                                                                | 指定生成题目文件的相对文件夹路径名和文件名。点击查看[更多详细用法](https://github.com/jdneo/vscode-leetcode/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A2%98%E7%9B%AE%E6%96%87%E4%BB%B6%E7%9A%84%E7%9B%B8%E5%AF%B9%E6%96%87%E4%BB%B6%E5%A4%B9%E8%B7%AF%E5%BE%84%E5%92%8C%E6%96%87%E4%BB%B6%E5%90%8D)。 |                    |
+| **[Deprecated] 请使用 `leetcode.filePath`** ~~`leetcode.outputFolder`~~            | ~~指定保存文件时所用的相对文件夹路径。除了用户自定义路径外，也可以使用保留项，包括：<ul><li>`${tag}`: 根据题目的类别进行分类。<li>`${language}`: 根据题目的语言进行分类。</li><li>`${difficulty}`: 根据题目的难度进行分类。</li></ul>例如：`problem-${tag}-${difficulty}`~~                     | ~~N/A~~            |
+| `leetcode.enableStatusBar`                                                         | 指定是否在 VS Code 下方显示插件状态栏。                                                                                                                                                                                                                                                         | `true`             |
+| **[Deprecated] 请使用 `leetcode.editor.shortcuts`** ~~`leetcode.enableShortcuts`~~ | ~~指定是否在 VS Code 编辑文件下方显示提交和测试的快捷按钮。~~                                                                                                                                                                                                                                   | ~~`true`~~         |
+| `leetcode.editor.shortcuts`                                                        | 指定在编辑器内所自定义的快捷方式。可用的快捷方式有: `submit`, `test`, `solution`, `description`。                                                                                                                                                                                               | `["submit, test"]` |
+| `leetcode.enableSideMode`                                                          | 指定在解决一道题时，是否将`问题预览`、`高票答案`与`提交结果`窗口集中在编辑器的第二栏。                                                                                                                                                                                                          | `true`             |
+| `leetcode.nodePath`                                                                | 指定 `Node.js` 可执行文件的路径。如：C:\Program Files\nodejs\node.exe                                                                                                                                                                                                                           | `node`             |
+| `leetcode.showCommentDescription`                                                  | 指定是否要在注释中显示题干。                                                                                                                                                                                                                                                                    | `false`            |
 
 ## 需要帮助？
 在遇到任何问题时，可以先查看一下[疑难解答](https://github.com/jdneo/vscode-leetcode/wiki/%E7%96%91%E9%9A%BE%E8%A7%A3%E7%AD%94)以及[常见问题](https://github.com/jdneo/vscode-leetcode/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)寻求帮助。

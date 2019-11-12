@@ -20,11 +20,7 @@
   </a>
 </p>
 
-## Sponsor
-[![coding](https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/sponsor_coding.png)](https://coding.net/?utm_source=leetcode)
-
-- [English Document](#Requirements)
-- [中文文档](https://github.com/jdneo/vscode-leetcode/blob/master/docs/README_zh-CN.md)
+- English Document | [中文文档](https://github.com/jdneo/vscode-leetcode/blob/master/docs/README_zh-CN.md)
 
 ## Requirements
 - [VS Code 1.30.1+](https://code.visualstudio.com/)
@@ -73,7 +69,7 @@
 - Directly click on the problem or right click the problem in the `LeetCode Explorer` and select `Preview Problem` to see the problem description.
 - Select `Show Problem` to directly open the file with the problem description.
 
-  > Note: If no folder is opened in VS Code, the extension will save the problem files in **$HOME/.leetcode/**.
+  > Note：You can specify the path of the workspace folder to store the problem files by updating the setting `leetcode.workspaceFolder`. The default value is：**$HOME/.leetcode/**.
 
   > You can specify whether including the problem description in comments or not by updating the setting `leetcode.showCommentDescription`.
 
@@ -81,37 +77,18 @@
 
 ---
 
-### Show Top Voted Solution
+### Editor Shortcuts
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/solution.png" alt="Show Top Voted Solution" />
+  <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/shortcuts.png" alt="Editor Shortcuts" />
 </p>
 
-- Select `Show Top Voted Solution` will display the top voted solution for you.
+- The extension supports 4 editor shortcuts (aka Code Lens):
+  - `Submit`: Submit your answer to LeetCode.
+  - `Test`: Test your answer with customized test cases.
+  - `Solution`: Show the top voted solution for the current problem.
+  - `Description`: Show the problem description page.
 
----
-
-### Submit the Answer
-<p align="center">
-  <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/submit.png" alt="Submit the Answer" />
-</p>
-
-- You can submit the answer by clicking `Submit` at the bottom of the file. Or you can right click in the editor and select `Submit to LeetCode`.
-
-> If you want to hide the shortcuts showing in the editor, just simply set the setting `leetcode.enableShortcuts` to false.
-
----
-
-### Test the Answer
-<p align="center">
-  <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/test.png" alt="Test the Answer" />
-</p>
-
-- You can test the answer by clicking `Test` at the bottom of the file. Or you can right click in the editor and select `Test in LeetCode`.
-
-- There are 3 ways to test the answer:
-  - **Test with the default cases**
-  - **Write test cases in input box**
-  - **Test with the written cases in file**
+  > Note: You can customize the shortcuts using the setting: `leetcode.editor.shortcuts`. By default, only `Submit` and `Test` shortcuts are enabled.
 
 ---
 
@@ -129,22 +106,26 @@
   <img src="https://raw.githubusercontent.com/jdneo/vscode-leetcode/master/docs/imgs/session.png" alt="Manage Session" />
 </p>
 
-- To manage your LeetCode sessions, just clicking the `LeetCode: ***` at the bottom of the status bar. You can **switch** between sessions or **create** a new session.
+- To manage your LeetCode sessions, just clicking the `LeetCode: ***` at the bottom of the status bar. You can **switch** between sessions or **create**, **delete** a session.
 
 
 ## Settings
-| Setting Name               | Description                                                                                                                                                                                                                                                                                                                                                                        | Default Value |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| `leetcode.hideSolved`      | Specify to hide the solved problems or not                                                                                                                                                                                                                                                                                                                                         | `false`       |
-| `leetcode.showLocked`      | Specify to show the locked problems or not. Only Premium users could open the locked problems                                                                                                                                                                                                                                                                                      | `false`       |
-| `leetcode.defaultLanguage` | Specify the default language used to solve the problem. Supported languages are: `bash`, `c`, `cpp`, `csharp`, `golang`, `java`, `javascript`, `kotlin`, `mysql`, `php`, `python`,`python3`,`ruby`,`rust`, `scala`,`swift`                                                                                                                                                         | `N/A`         |
-| `leetcode.useWsl`          | Specify whether to use WSL or not                                                                                                                                                                                                                                                                                                                                                  | `false`       |
-| `leetcode.endpoint`        | Specify the active endpoint. Supported endpoints are: `leetcode`, `leetcode-cn`                                                                                                                                                                                                                                                                                                    | `leetcode`    |
-| `leetcode.outputFolder`    | Specify the relative path to save the problem files. Besides using customized path, there are also several reserved words which can be used here: <ul><li>`${tag}`: Categorize the problem according to their tags.<li>`${language}`: Categorize the problem according to their language.</li><li>`${difficulty}`: Categorize the problem according to their difficulty.</li></ul> | N/A           |
-| `leetcode.enableStatusBar` | Specify whether the LeetCode status bar will be shown or not.                                                                                                                                                                                                                                                                                                                      | `true`        |
-| `leetcode.enableShortcuts` | Specify whether the submit and test shortcuts in editor or not.                                                                                                                                                                                                                                                                                                                    | `true`        |
-| `leetcode.enableSideMode`  | Specify whether `preview`, `solution` and `submission` tab should be grouped into the second editor column when solving a problem.                                                                                                                                                                                                                                                 | `true`        |
-| `leetcode.nodePath`        | Specify the `Node.js` executable path.                                                                                                                                                                                                                                                                                                                                             | `node`        |
+| Setting Name                                                                            | Description                                                                                                                                                                                                                                                                                                                                                                                                                       | Default Value      |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
+| `leetcode.hideSolved`                                                                   | Specify to hide the solved problems or not                                                                                                                                                                                                                                                                                                                                                                                        | `false`            |
+| `leetcode.showLocked`                                                                   | Specify to show the locked problems or not. Only Premium users could open the locked problems                                                                                                                                                                                                                                                                                                                                     | `false`            |
+| `leetcode.defaultLanguage`                                                              | Specify the default language used to solve the problem. Supported languages are: `bash`, `c`, `cpp`, `csharp`, `golang`, `java`, `javascript`, `kotlin`, `mysql`, `php`, `python`,`python3`,`ruby`,`rust`, `scala`,`swift`                                                                                                                                                                                                        | `N/A`              |
+| `leetcode.useWsl`                                                                       | Specify whether to use WSL or not                                                                                                                                                                                                                                                                                                                                                                                                 | `false`            |
+| `leetcode.endpoint`                                                                     | Specify the active endpoint. Supported endpoints are: `leetcode`, `leetcode-cn`                                                                                                                                                                                                                                                                                                                                                   | `leetcode`         |
+| `leetcode.workspaceFolder`                                                              | Specify the path of the workspace folder to store the problem files.                                                                                                                                                                                                                                                                                                                                                              | `""`               |
+| `leetcode.filePath`                                                                     | Specify the relative path under the workspace and the file name to save the problem files. More details can be found [here](https://github.com/jdneo/vscode-leetcode/wiki/Customize-the-Relative-Folder-and-the-File-Name-of-the-Problem-File).                                                                                                                                                                                   |                    |
+| **[Deprecated] Use `leetcode.filePath` instead** ~~`leetcode.outputFolder`~~            | ~~Specify the relative path to save the problem files. Besides using customized path, there are also several reserved words which can be used here: <ul><li>`${tag}`: Categorize the problem according to their tags.<li>`${language}`: Categorize the problem according to their language.</li><li>`${difficulty}`: Categorize the problem according to their difficulty.</li></ul>For example: `problem-${tag}-${difficulty}`~~ | ~~N/A~~            |
+| `leetcode.enableStatusBar`                                                              | Specify whether the LeetCode status bar will be shown or not.                                                                                                                                                                                                                                                                                                                                                                     | `true`             |
+| **[Deprecated] Use `leetcode.editor.shortcuts` instead** ~~`leetcode.enableShortcuts`~~ | ~~Specify whether the submit and test shortcuts in editor or not.~~                                                                                                                                                                                                                                                                                                                                                               | ~~`true`~~         |
+| `leetcode.editor.shortcuts`                                                             | Specify the customized shorcuts in editors. Supported values are: `submit`, `test`, `solution` and `description`.                                                                                                                                                                                                                                                                                                                 | `["submit, test"]` |
+| `leetcode.enableSideMode`                                                               | Specify whether `preview`, `solution` and `submission` tab should be grouped into the second editor column when solving a problem.                                                                                                                                                                                                                                                                                                | `true`             |
+| `leetcode.nodePath`                                                                     | Specify the `Node.js` executable path. for example, C:\Program Files\nodejs\node.exe                                                                                                                                                                                                                                                                                                                                              | `node`             |
+| `leetcode.showCommentDescription`                                                       | Specify whether to include the problem description in the comments                                                                                                                                                                                                                                                                                                                                                                | `false`            |
 
 ## Want Help?
 

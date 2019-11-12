@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { commands, ViewColumn } from "vscode";
-import { IProblem } from "../shared";
+import { getLeetCodeEndpoint } from "../commands/plugin";
+import { Endpoint, IProblem } from "../shared";
 import { ILeetCodeWebviewOption, LeetCodeWebview } from "./LeetCodeWebview";
 import { markdownEngine } from "./markdownEngine";
 
@@ -22,9 +23,11 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
         this.node = node;
         this.sideMode = isSideMode;
         this.showWebviewInternal();
-        if (this.sideMode) {
-            this.hideSideBar(); // For better view area
-        }
+        // Comment out this operation since it sometimes may cause the webview become empty.
+        // Waiting for the progress of the VS Code side issue: https://github.com/microsoft/vscode/issues/3742
+        // if (this.sideMode) {
+        //     this.hideSideBar(); // For better view area
+        // }
     }
 
     protected getWebviewOption(): ILeetCodeWebviewOption {
@@ -95,12 +98,17 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
             ),
             `</details>`,
         ].join("\n");
+        const links: string = markdownEngine.render(`[Discussion](${this.getDiscussionLink(url)}) | [Solution](${this.getSolutionLink(url)})`);
         return `
             <!DOCTYPE html>
             <html>
             <head>
+                <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src https:; script-src vscode-resource: 'unsafe-inline'; style-src vscode-resource: 'unsafe-inline';"/>
                 ${markdownEngine.getStyles()}
                 ${!this.sideMode ? button.style : ""}
+                <style>
+                    code { white-space: pre-wrap; }
+                </style>
             </head>
             <body>
                 ${head}
@@ -108,6 +116,8 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
                 ${tags}
                 ${companies}
                 ${body}
+                <hr />
+                ${links}
                 ${!this.sideMode ? button.element : ""}
                 <script>
                     const vscode = acquireVsCodeApi();
@@ -134,10 +144,10 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
         }
     }
 
-    private async hideSideBar(): Promise<void> {
-        await commands.executeCommand("workbench.action.focusSideBar");
-        await commands.executeCommand("workbench.action.toggleSidebarVisibility");
-    }
+    // private async hideSideBar(): Promise<void> {
+    //     await commands.executeCommand("workbench.action.focusSideBar");
+    //     await commands.executeCommand("workbench.action.toggleSidebarVisibility");
+    // }
 
     private parseDescription(descString: string, problem: IProblem): IDescription {
         const [
@@ -163,8 +173,23 @@ class LeetCodePreviewProvider extends LeetCodeWebview {
             difficulty: difficulty.slice(2),
             likes: likes.split(": ")[1].trim(),
             dislikes: dislikes.split(": ")[1].trim(),
-            body: body.join("\n").replace(/<pre>\s*([^]+?)\s*<\/pre>/g, "<pre><code>$1</code></pre>"),
+            body: body.join("\n").replace(/<pre>[\r\n]*([^]+?)[\r\n]*<\/pre>/g, "<pre><code>$1</code></pre>"),
         };
+    }
+
+    private getDiscussionLink(url: string): string {
+        const endPoint: string = getLeetCodeEndpoint();
+        if (endPoint === Endpoint.LeetCodeCN) {
+            return url.replace("/description/", "/comments/");
+        } else if (endPoint === Endpoint.LeetCode) {
+            return url.replace("/description/", "/discuss/?currentPage=1&orderBy=most_votes&query=");
+        }
+
+        return "https://leetcode.com";
+    }
+
+    private getSolutionLink(url: string): string {
+        return url.replace("/description/", "/solution/");
     }
 }
 
